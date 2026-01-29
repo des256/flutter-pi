@@ -1,3 +1,19 @@
+# why this fork?
+
+Simple answer: `flutter-pi` does not work properly on Raspberry Pi 5 hardware and newer linux kernels.
+
+## Rotation Issue
+
+One of the issues is that hardware rotation is no longer supported in `vc4-kms-dsi` (according to various GPT sessions, this is because the GPU is no longer used to help transform the image). This fork comments out the rotation check, so the rotation will be fixed on the display. To rotate the app anyway, use `RotatedBox` or `Transform` in Flutter. Note: Make sure the touchscreen events are also rotated there.
+
+## Pixelformat Issue
+
+Another issue is the default pixelformat (ARGB8888) doesn't seem to be supported anymore (probably same reason). A way around this is to run with `--pixelformat RGB565`.
+
+## Proper Pull Request to `ardera/flutter-pi`
+
+There should be a better solution than just commenting out the checking code. I might consider this later.
+
 ## 📰 NEWS
 - Added a (not complete) sentry plugin, see: https://github.com/ardera/flutter-pi/wiki/Sentry-Support
 - There's now flutterpi tool to make building the app easier: https://pub.dev/packages/flutterpi_tool
