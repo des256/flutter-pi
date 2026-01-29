@@ -2064,7 +2064,7 @@ static bool plane_qualifies(
     enum pixfmt format,
     bool has_modifier, uint64_t modifier,
     bool has_zpos, int64_t zpos_lower_limit, int64_t zpos_upper_limit,
-    bool has_rotation, drm_plane_transform_t rotation,
+    //bool has_rotation, drm_plane_transform_t rotation,
     bool has_id_range, uint32_t id_lower_limit
     // clang-format on
 ) {
@@ -2158,6 +2158,9 @@ static bool plane_qualifies(
         LOG_DRM_PLANE_ALLOCATION_DEBUG("      plane id: %" PRIu32 ", plane id lower limit: %" PRIu32 "\n", plane->id, id_lower_limit);
         return false;
     }
+
+    // attempting to debug on Pi5:
+    /*
     if (has_rotation) {
         if (!plane->has_rotation) {
             // return false if the plane doesn't support rotation
@@ -2176,6 +2179,7 @@ static bool plane_qualifies(
             return false;
         }
     }
+    */
 
     LOG_DRM_PLANE_ALLOCATION_DEBUG("    does qualify.\n");
     return true;
@@ -2190,7 +2194,7 @@ static struct drm_plane *allocate_plane(
     enum pixfmt format,
     bool has_modifier, uint64_t modifier,
     bool has_zpos, int64_t zpos_lower_limit, int64_t zpos_upper_limit,
-    bool has_rotation, drm_plane_transform_t rotation,
+    //bool has_rotation, drm_plane_transform_t rotation,
     bool has_id_range, uint32_t id_lower_limit
     // clang-format on
 ) {
@@ -2210,8 +2214,8 @@ static struct drm_plane *allocate_plane(
                 has_zpos,
                 zpos_lower_limit,
                 zpos_upper_limit,
-                has_rotation,
-                rotation,
+                //has_rotation,
+                //rotation,
                 has_id_range,
                 id_lower_limit
             );
@@ -2446,7 +2450,7 @@ int kms_req_builder_push_fb_layer(
             /* format */ layer->format,
             /* modifier */ layer->has_modifier, layer->modifier,
             /* zpos */ false, 0, 0,
-            /* rotation */ layer->has_rotation, layer->rotation,
+            ///* rotation */ layer->has_rotation, layer->rotation,
             /* id_range */ false, 0
             // clang-format on
         );
@@ -2473,7 +2477,7 @@ int kms_req_builder_push_fb_layer(
             /* format */ layer->format,
             /* modifier */ layer->has_modifier, layer->modifier,
             /* zpos */ false, 0, 0,
-            /* rotation */ layer->has_rotation, layer->rotation,
+            ///* rotation */ layer->has_rotation, layer->rotation,
             /* id_range */ false, 0
             // clang-format on
         );
@@ -2489,7 +2493,7 @@ int kms_req_builder_push_fb_layer(
                 /* format */ pixfmt_opaque(layer->format),
                 /* modifier */ layer->has_modifier, layer->modifier,
                 /* zpos */ false, 0, 0,
-                /* rotation */ layer->has_rotation, layer->rotation,
+                ///* rotation */ layer->has_rotation, layer->rotation,
                 /* id_range */ false, 0
                 // clang-format on
             );
@@ -2505,7 +2509,7 @@ int kms_req_builder_push_fb_layer(
             /* format */ layer->format,
             /* modifier */ layer->has_modifier, layer->modifier,
             /* zpos */ true, builder->next_zpos, INT64_MAX,
-            /* rotation */ layer->has_rotation, layer->rotation,
+            ///* rotation */ layer->has_rotation, layer->rotation,
             /* id_range */ false, 0
             // clang-format on
         );
@@ -2524,7 +2528,7 @@ int kms_req_builder_push_fb_layer(
                 /* format */ layer->format,
                 /* modifier */ layer->has_modifier, layer->modifier,
                 /* zpos */ false, 0, 0,
-                /* rotation */ layer->has_rotation, layer->rotation,
+                ///* rotation */ layer->has_rotation, layer->rotation,
                 /* id_range */ true, builder->layers[index - 1].plane_id + 1
                 // clang-format on
             );
